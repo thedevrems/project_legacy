@@ -5,7 +5,8 @@
       <p>A modern booking management system built with Vue.js</p>
 
       <div v-if="!authStore.isAuthenticated" class="actions">
-        <router-link to="/login" class="btn btn-primary">Get Started</router-link>
+        <router-link to="/register" class="btn btn-primary">Create Account</router-link>
+        <router-link to="/login" class="btn btn-secondary">Login</router-link>
       </div>
 
       <div v-else class="actions">

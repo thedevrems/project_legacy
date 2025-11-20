@@ -24,6 +24,13 @@
         </button>
       </form>
 
+      <div class="register-link">
+        <p>
+          Don't have an account?
+          <router-link to="/register">Create one here</router-link>
+        </p>
+      </div>
+
       <div class="info-box">
         <p><strong>Note:</strong> This is a simplified authentication system (email only).</p>
         <p>
@@ -122,6 +129,22 @@ input:focus {
 input:disabled {
   background: #f5f5f5;
   cursor: not-allowed;
+}
+
+.register-link {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #666;
+}
+
+.register-link a {
+  color: #42b983;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
 }
 
 .info-box {

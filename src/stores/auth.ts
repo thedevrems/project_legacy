@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { User } from '@/models/User'
+import type { User, CreateUserAccountDto } from '@/models/User'
 import { authService } from '@/services/AuthService'
 
 /**
@@ -19,6 +19,21 @@ export const useAuthStore = defineStore('auth', () => {
    */
   function initialize() {
     currentUser.value = authService.getCurrentUser()
+  }
+
+  /**
+   * Register a new user account
+   */
+  function register(data: CreateUserAccountDto) {
+    try {
+      const userAccount = authService.register(data)
+      return { success: true, userAccount }
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Registration failed',
+      }
+    }
   }
 
   /**
@@ -51,6 +66,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAdmin,
     userEmail,
     initialize,
+    register,
     login,
     logout,
   }
