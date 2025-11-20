@@ -1,86 +1,86 @@
-# Booking System - Modern Service Reservation Application
+# Système de Réservation - Application Moderne de Gestion de Services
 
-## Table of Contents
+## Table des Matières
 
-- [About](#about)
-- [Key Features](#key-features)
-- [Technical Choices](#technical-choices)
+- [À Propos](#à-propos)
+- [Fonctionnalités Clés](#fonctionnalités-clés)
+- [Choix Techniques](#choix-techniques)
 - [Architecture](#architecture)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Testing](#testing)
-- [Code Quality](#code-quality)
-- [Project Structure](#project-structure)
-- [Business Rules](#business-rules)
+- [Utilisation](#utilisation)
+- [Tests](#tests)
+- [Qualité du Code](#qualité-du-code)
+- [Structure du Projet](#structure-du-projet)
+- [Règles Métier](#règles-métier)
 
-## About
+## À Propos
 
-This is a modern booking management system that allows users to browse available services, book time slots, and manage their reservations. The application includes an admin panel for managing services and time slots.
+Il s'agit d'un système moderne de gestion de réservations qui permet aux utilisateurs de parcourir les services disponibles, réserver des créneaux horaires et gérer leurs réservations. L'application inclut un panneau d'administration pour gérer les services et les créneaux horaires.
 
-**Domain:** Service booking and appointment management
+**Domaine :** Réservation de services et gestion de rendez-vous
 
-**Purpose:** This project demonstrates best practices in software architecture, code quality, and maintainability by implementing a clean, layered architecture with proper separation of concerns.
+**Objectif :** Ce projet démontre les bonnes pratiques en architecture logicielle, qualité de code et maintenabilité en implémentant une architecture en couches propre avec une séparation appropriée des responsabilités.
 
-## Key Features
+## Fonctionnalités Clés
 
-### For Users
-- **Email-based Authentication**: Simple login system using email only (no password required)
-- **Service Catalog**: Browse available services with descriptions and duration
-- **Time Slot Booking**: View available time slots and make reservations
-- **Reservation Management**: View all reservations and cancel upcoming bookings
-- **Duplicate Prevention**: System prevents double-booking the same slot
+### Pour les Utilisateurs
+- **Inscription et Authentification par Email** : Inscription complète avec validation des données (email, nom, prénom, téléphone optionnel) et système de connexion simple utilisant uniquement l'email (pas de mot de passe requis)
+- **Catalogue de Services** : Parcourir les services disponibles avec descriptions et durée
+- **Réservation de Créneaux** : Consulter les créneaux disponibles et effectuer des réservations
+- **Gestion des Réservations** : Voir toutes ses réservations et annuler les réservations à venir
+- **Prévention des Doublons** : Le système empêche la réservation deux fois du même créneau
 
-### For Administrators
-- **Service Management**: Add, edit, and remove services
-- **Slot Management**: Create and manage time slots for each service
-- **Capacity Control**: Set and manage capacity for each time slot
+### Pour les Administrateurs
+- **Gestion des Services** : Ajouter, modifier et supprimer des services
+- **Gestion des Créneaux** : Créer et gérer les créneaux horaires pour chaque service
+- **Contrôle de la Capacité** : Définir et gérer la capacité de chaque créneau horaire
 
-## Technical Choices
+## Choix Techniques
 
-### Stack: Vue.js + TypeScript + Vite
+### Stack : Vue.js + TypeScript + Vite
 
-**Why Vue.js?**
-- **Progressive Framework**: Easy to learn yet powerful for complex applications
-- **Reactive Data System**: Automatic UI updates with minimal boilerplate
-- **Component-Based**: Encourages reusability and maintainability
-- **Excellent Tooling**: First-class TypeScript support and great developer experience
+**Pourquoi Vue.js ?**
+- **Framework Progressif** : Facile à apprendre tout en étant puissant pour les applications complexes
+- **Système de Données Réactif** : Mises à jour automatiques de l'interface avec un minimum de code répétitif
+- **Basé sur les Composants** : Encourage la réutilisabilité et la maintenabilité
+- **Excellent Outillage** : Support TypeScript de première classe et excellente expérience développeur
 
-**Why TypeScript?**
-- **Type Safety**: Catch errors at compile-time, not runtime
-- **Better IDE Support**: Autocomplete, refactoring, and inline documentation
-- **Self-Documenting**: Types serve as inline documentation
-- **Refactoring Confidence**: Safe refactoring with compiler checks
+**Pourquoi TypeScript ?**
+- **Sécurité des Types** : Détecter les erreurs à la compilation, pas à l'exécution
+- **Meilleur Support IDE** : Autocomplétion, refactoring et documentation inline
+- **Auto-documentant** : Les types servent de documentation inline
+- **Confiance au Refactoring** : Refactoring sécurisé avec vérifications du compilateur
 
-**Why Vite?**
-- **Lightning Fast**: Instant server start and Hot Module Replacement (HMR)
-- **Modern Build Tool**: Optimized production builds with rollup
-- **Zero Config**: Works out of the box with sensible defaults
+**Pourquoi Vite ?**
+- **Ultra Rapide** : Démarrage instantané du serveur et Remplacement de Module à Chaud (HMR)
+- **Outil de Build Moderne** : Builds de production optimisés avec rollup
+- **Configuration Zéro** : Fonctionne directement avec des paramètres par défaut sensés
 
-### Additional Technologies
+### Technologies Additionnelles
 
-- **Pinia**: Modern state management for Vue 3 (lighter and more intuitive than Vuex)
-- **Vue Router**: Official routing solution with navigation guards for authentication
-- **Vitest**: Fast unit testing framework with native ESM support
-- **ESLint + Prettier**: Code quality and consistent formatting
-- **LocalStorage**: Simple persistence solution (can be easily replaced with a backend API)
+- **Pinia** : Gestion d'état moderne pour Vue 3 (plus léger et intuitif que Vuex)
+- **Vue Router** : Solution de routage officielle avec gardes de navigation pour l'authentification
+- **Vitest** : Framework de tests unitaires rapide avec support natif ESM
+- **ESLint + Prettier** : Qualité du code et formatage cohérent
+- **LocalStorage** : Solution de persistance simple (peut être facilement remplacée par une API backend)
 
 ## Architecture
 
-This project follows a **layered architecture** with clear separation of concerns:
+Ce projet suit une **architecture en couches** avec une séparation claire des responsabilités :
 
 ```
 ┌─────────────────────────────────────────┐
-│         Presentation Layer              │
-│   (Vue Components, Views, Router)       │
+│         Couche Présentation             │
+│   (Composants Vue, Vues, Router)        │
 └─────────────────┬───────────────────────┘
                   │
 ┌─────────────────▼───────────────────────┐
-│         State Management Layer          │
-│            (Pinia Stores)               │
+│      Couche Gestion d'État              │
+│            (Stores Pinia)               │
 └─────────────────┬───────────────────────┘
                   │
 ┌─────────────────▼───────────────────────┐
-│         Business Logic Layer            │
+│      Couche Logique Métier              │
 │           (Services)                    │
 │  - AuthService                          │
 │  - BookingService                       │
@@ -89,254 +89,260 @@ This project follows a **layered architecture** with clear separation of concern
 └─────────────────┬───────────────────────┘
                   │
 ┌─────────────────▼───────────────────────┐
-│         Data Access Layer               │
+│       Couche Accès aux Données          │
 │         (Repositories)                  │
 │  - BaseRepository                       │
+│  - UserRepository                       │
 │  - ServiceRepository                    │
 │  - SlotRepository                       │
 │  - ReservationRepository                │
 └─────────────────┬───────────────────────┘
                   │
 ┌─────────────────▼───────────────────────┐
-│         Persistence Layer               │
+│       Couche Persistance                │
 │         (localStorage)                  │
 └─────────────────────────────────────────┘
 ```
 
-### Layer Responsibilities
+### Responsabilités des Couches
 
-1. **Presentation Layer** (Views/Components)
-   - User interface and user interactions
-   - No business logic
-   - Communicates only with stores
+1. **Couche Présentation** (Vues/Composants)
+   - Interface utilisateur et interactions utilisateur
+   - Pas de logique métier
+   - Communique uniquement avec les stores
 
-2. **State Management** (Pinia Stores)
-   - Application state
-   - Orchestrates service calls
-   - Provides reactive data to components
+2. **Gestion d'État** (Stores Pinia)
+   - État de l'application
+   - Orchestre les appels aux services
+   - Fournit des données réactives aux composants
 
-3. **Business Logic** (Services)
-   - Contains all business rules
-   - Validates data
-   - Coordinates between repositories
-   - No UI concerns
+3. **Logique Métier** (Services)
+   - Contient toutes les règles métier
+   - Valide les données
+   - Coordonne entre les repositories
+   - Aucune préoccupation d'interface
 
-4. **Data Access** (Repositories)
-   - CRUD operations
-   - Data persistence
-   - No business logic
+4. **Accès aux Données** (Repositories)
+   - Opérations CRUD
+   - Persistance des données
+   - Pas de logique métier
 
-5. **Models**
-   - Type definitions
-   - Data structures
-   - Shared across all layers
+5. **Modèles**
+   - Définitions de types
+   - Structures de données
+   - Partagés entre toutes les couches
 
-### Benefits of This Architecture
+### Avantages de Cette Architecture
 
-- **Testability**: Each layer can be tested independently
-- **Maintainability**: Changes in one layer don't affect others
-- **Scalability**: Easy to replace localStorage with a real backend
-- **Reusability**: Business logic can be reused across different UIs
-- **Clear Responsibilities**: Each class/file has a single, well-defined purpose
+- **Testabilité** : Chaque couche peut être testée indépendamment
+- **Maintenabilité** : Les changements dans une couche n'affectent pas les autres
+- **Évolutivité** : Facile de remplacer localStorage par un vrai backend
+- **Réutilisabilité** : La logique métier peut être réutilisée dans différentes interfaces
+- **Responsabilités Claires** : Chaque classe/fichier a un objectif unique et bien défini
 
 ## Installation
 
-### Prerequisites
+### Prérequis
 
 - Node.js >= 18.x
 - npm >= 9.x
 
-### Steps
+### Étapes
 
-1. Clone the repository:
+1. Cloner le dépôt :
 ```bash
-git clone <repository-url>
+git clone <url-du-depot>
 cd project_legacy
 ```
 
-2. Install dependencies:
+2. Installer les dépendances :
 ```bash
 npm install
 ```
 
-## Usage
+## Utilisation
 
-### Development Server
+### Serveur de Développement
 
-Start the development server with hot reload:
+Démarrer le serveur de développement avec rechargement à chaud :
 
 ```bash
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`
+L'application sera disponible à l'adresse `http://localhost:5173`
 
-### Production Build
+### Build de Production
 
-Build the application for production:
+Construire l'application pour la production :
 
 ```bash
 npm run build
 ```
 
-Preview the production build:
+Prévisualiser le build de production :
 
 ```bash
 npm run preview
 ```
 
-### Default Admin Access
+### Accès Administrateur par Défaut
 
-For testing admin features, use one of these emails:
+Pour tester les fonctionnalités d'administration, utilisez l'un de ces emails :
 - `admin@example.com`
 - `admin@booking.com`
 
-Any other email will have regular user access.
+Tout autre email aura un accès utilisateur régulier.
 
-## Testing
+## Tests
 
-### Run Unit Tests
+### Exécuter les Tests Unitaires
 
 ```bash
 npm run test
 ```
 
-### Run Tests in UI Mode
+### Exécuter les Tests en Mode Interface
 
 ```bash
 npm run test:ui
 ```
 
-### Test Coverage
+### Couverture de Test
 
 ```bash
 npm run test:coverage
 ```
 
-### Test Files
+### Fichiers de Test
 
-Tests are located in `src/__tests__/` and cover:
-- Authentication logic
-- Booking rules (double booking prevention, capacity checks)
-- Service management (CRUD operations, validation)
-- Business rule enforcement
+Les tests sont situés dans `src/__tests__/` et couvrent :
+- Logique d'authentification et d'inscription
+- Règles de réservation (prévention double réservation, vérifications capacité)
+- Gestion des services (opérations CRUD, validation)
+- Application des règles métier
 
-## Code Quality
+## Qualité du Code
 
 ### Linting
 
-Check and fix code issues:
+Vérifier et corriger les problèmes de code :
 
 ```bash
 npm run lint
 ```
 
-### Formatting
+### Formatage
 
-Format code with Prettier:
+Formater le code avec Prettier :
 
 ```bash
 npm run format
 ```
 
-### Quality Tools in Place
+### Outils de Qualité en Place
 
-- **ESLint**: Static code analysis with Vue and TypeScript rules
-- **Prettier**: Consistent code formatting
-- **TypeScript**: Strict type checking enabled
-- **Vitest**: Unit testing framework
+- **ESLint** : Analyse statique du code avec règles Vue et TypeScript
+- **Prettier** : Formatage cohérent du code
+- **TypeScript** : Vérification stricte des types activée
+- **Vitest** : Framework de tests unitaires
 
-## Project Structure
+## Structure du Projet
 
 ```
 project_legacy/
 ├── src/
-│   ├── models/              # Data models and types
+│   ├── models/              # Modèles de données et types
 │   │   ├── User.ts
 │   │   ├── Service.ts
 │   │   ├── Slot.ts
 │   │   └── Reservation.ts
 │   │
-│   ├── repositories/        # Data access layer
+│   ├── repositories/        # Couche d'accès aux données
 │   │   ├── BaseRepository.ts
+│   │   ├── UserRepository.ts
 │   │   ├── ServiceRepository.ts
 │   │   ├── SlotRepository.ts
 │   │   └── ReservationRepository.ts
 │   │
-│   ├── services/            # Business logic layer
+│   ├── services/            # Couche logique métier
 │   │   ├── AuthService.ts
 │   │   ├── BookingService.ts
 │   │   ├── ServiceManagementService.ts
 │   │   └── SlotManagementService.ts
 │   │
-│   ├── stores/              # State management (Pinia)
+│   ├── stores/              # Gestion d'état (Pinia)
 │   │   ├── auth.ts
 │   │   ├── services.ts
 │   │   ├── slots.ts
 │   │   └── bookings.ts
 │   │
-│   ├── views/               # Page components
+│   ├── views/               # Composants de page
 │   │   ├── HomeView.vue
 │   │   ├── LoginView.vue
+│   │   ├── RegisterView.vue
 │   │   ├── ServicesView.vue
 │   │   ├── ServiceDetailView.vue
 │   │   ├── MyReservationsView.vue
 │   │   └── AdminView.vue
 │   │
-│   ├── components/          # Reusable components
+│   ├── components/          # Composants réutilisables
 │   │   └── AppHeader.vue
 │   │
-│   ├── router/              # Routing configuration
+│   ├── router/              # Configuration du routage
 │   │   └── index.ts
 │   │
-│   ├── utils/               # Utility functions
+│   ├── utils/               # Fonctions utilitaires
 │   │   └── idGenerator.ts
 │   │
-│   ├── __tests__/           # Unit tests
+│   ├── __tests__/           # Tests unitaires
 │   │   ├── AuthService.test.ts
 │   │   ├── BookingService.test.ts
-│   │   └── ServiceManagementService.test.ts
+│   │   ├── ServiceManagementService.test.ts
+│   │   └── UserRepository.test.ts
 │   │
-│   ├── App.vue              # Root component
-│   └── main.ts              # Application entry point
+│   ├── App.vue              # Composant racine
+│   └── main.ts              # Point d'entrée de l'application
 │
-├── .eslintrc.cjs            # ESLint configuration
-├── .prettierrc.json         # Prettier configuration
-├── .gitignore               # Git ignore rules
-├── vite.config.ts           # Vite configuration
-├── vitest.config.ts         # Vitest configuration
-├── tsconfig.json            # TypeScript configuration
-└── package.json             # Dependencies and scripts
+├── .eslintrc.cjs            # Configuration ESLint
+├── .prettierrc.json         # Configuration Prettier
+├── .gitignore               # Règles d'exclusion Git
+├── vite.config.ts           # Configuration Vite
+├── vitest.config.ts         # Configuration Vitest
+├── tsconfig.json            # Configuration TypeScript
+└── package.json             # Dépendances et scripts
 ```
 
-## Business Rules
+## Règles Métier
 
-### Booking Rules
+### Règles de Réservation
 
-1. **Double Booking Prevention**: A user cannot book the same slot twice
-2. **Capacity Management**: Each slot has a maximum capacity that cannot be exceeded
-3. **Future Bookings Only**: Users can only book slots in the future
-4. **Cancellation Restriction**: Users can only cancel their own future reservations
+1. **Prévention du Double Booking** : Un utilisateur ne peut pas réserver le même créneau deux fois
+2. **Gestion de la Capacité** : Chaque créneau a une capacité maximale qui ne peut être dépassée
+3. **Réservations Futures Uniquement** : Les utilisateurs ne peuvent réserver que des créneaux futurs
+4. **Restriction d'Annulation** : Les utilisateurs ne peuvent annuler que leurs propres réservations futures
 
-### Service Management Rules
+### Règles de Gestion des Services
 
-1. **Unique Names**: Service names must be unique
-2. **Required Fields**: Service name is mandatory
-3. **Cascading Deletion**: Deleting a service removes all its associated slots and reservations
+1. **Noms Uniques** : Les noms de services doivent être uniques
+2. **Champs Requis** : Le nom du service est obligatoire
+3. **Suppression en Cascade** : Supprimer un service supprime tous ses créneaux et réservations associés
 
-### Slot Management Rules
+### Règles de Gestion des Créneaux
 
-1. **Future Slots Only**: Slots must be created for future dates
-2. **Positive Capacity**: Slot capacity must be a positive integer
-3. **Capacity Reduction**: Cannot reduce capacity below current reservation count
+1. **Créneaux Futurs Uniquement** : Les créneaux doivent être créés pour des dates futures
+2. **Capacité Positive** : La capacité d'un créneau doit être un entier positif
+3. **Réduction de Capacité** : Impossible de réduire la capacité en dessous du nombre de réservations actuelles
 
-### Authentication Rules
+### Règles d'Authentification
 
-1. **Email Validation**: Must be a valid email format
-2. **Admin Access**: Specific emails have admin privileges
-3. **Session Persistence**: User session persists across page refreshes
+1. **Validation Email** : Doit être un format d'email valide
+2. **Validation Téléphone** : Format optionnel mais validé si fourni (10-15 chiffres)
+3. **Unicité Email** : Chaque email ne peut être enregistré qu'une seule fois
+4. **Accès Administrateur** : Des emails spécifiques ont des privilèges d'administration
+5. **Persistance de Session** : La session utilisateur persiste lors des rafraîchissements de page
 
-## Data Models
+## Modèles de Données
 
 ### Service
 ```typescript
@@ -344,12 +350,12 @@ project_legacy/
   id: string
   name: string
   description?: string
-  duration?: number  // in minutes
+  duration?: number  // en minutes
   createdAt: string  // ISO 8601
 }
 ```
 
-### Slot
+### Créneau (Slot)
 ```typescript
 {
   id: string
@@ -360,7 +366,7 @@ project_legacy/
 }
 ```
 
-### Reservation
+### Réservation
 ```typescript
 {
   id: string
@@ -370,34 +376,38 @@ project_legacy/
 }
 ```
 
-### User
+### Utilisateur
 ```typescript
 {
   email: string
+  firstName: string
+  lastName: string
+  phone?: string
   isAdmin: boolean
+  createdAt: string  // ISO 8601
   lastLogin: string  // ISO 8601
 }
 ```
 
-## Future Enhancements
+## Améliorations Futures
 
-Potential improvements for future iterations:
+Améliorations potentielles pour les itérations futures :
 
-- [ ] Backend API integration (replace localStorage)
-- [ ] Real authentication with passwords and JWT
-- [ ] Email notifications for bookings
-- [ ] Calendar view for slots
-- [ ] Service categories and filtering
-- [ ] User profile management
-- [ ] Booking history and analytics
-- [ ] Multi-language support
-- [ ] Dark mode
-- [ ] Mobile app (React Native/Flutter)
+- [ ] Intégration API backend (remplacer localStorage)
+- [ ] Authentification réelle avec mots de passe et JWT
+- [ ] Notifications par email pour les réservations
+- [ ] Vue calendrier pour les créneaux
+- [ ] Catégories de services et filtrage
+- [ ] Gestion du profil utilisateur
+- [ ] Historique et statistiques des réservations
+- [ ] Support multilingue
+- [ ] Mode sombre
+- [ ] Application mobile (React Native/Flutter)
 
-## License
+## Licence
 
-This project is part of an educational assignment.
+Ce projet fait partie d'un exercice éducatif.
 
-## Author
+## Auteur
 
-Built as a refactoring exercise to demonstrate software engineering best practices.
+Construit comme exercice de refactoring pour démontrer les bonnes pratiques en génie logiciel.
