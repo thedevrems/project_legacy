@@ -10,11 +10,11 @@
 Je vais vous présenter aujourd'hui un **système de réservation moderne** qui illustre parfaitement les bonnes pratiques de conception logicielle.
 
 **En quelques chiffres :**
-- ✅ Application complète en **Vue.js + TypeScript**
-- ✅ Architecture en **5 couches** séparées
-- ✅ **Design system professionnel** noir/blanc
-- ✅ **127+ variables CSS** pour la cohérence
-- ✅ **100% responsive** mobile/tablette/desktop
+- ✅ Application complète en **Vue.js + TypeScript** (framework JavaScript moderne avec typage - sécurité accrue du code)
+- ✅ Architecture en **5 couches** séparées (organisation modulaire du code)
+- ✅ **Design system professionnel** noir/blanc (système de conception unifié - ensemble cohérent d'éléments visuels)
+- ✅ **127+ variables CSS** pour la cohérence (tokens de design réutilisables - couleurs, espacements, etc.)
+- ✅ **100% responsive** mobile/tablette/desktop (adaptatif - s'ajuste automatiquement à toutes les tailles d'écran)
 
 ---
 
@@ -29,42 +29,42 @@ Les systèmes de réservation existants souffrent souvent de :
 
 ### Notre Solution
 Une application moderne qui combine :
-- ✅ **Architecture propre** : Séparation stricte en couches
-- ✅ **UX premium** : Design minimaliste noir/blanc à fort contraste
-- ✅ **TypeScript strict** : Sécurité des types garantie
-- ✅ **Tests unitaires** : Fiabilité du code métier
+- ✅ **Architecture propre** : Séparation stricte en couches (organisation claire du code)
+- ✅ **UX premium** (User Experience - expérience utilisateur) : Design minimaliste noir/blanc à fort contraste
+- ✅ **TypeScript strict** : Sécurité des types garantie (détection d'erreurs avant l'exécution)
+- ✅ **Tests unitaires** : Fiabilité du code métier (tests automatisés de parties isolées du code)
 
 ---
 
 ## 🏗️ SLIDE 3 : Architecture Technique (60 secondes)
 
-### Stack Technologique Moderne
+### Stack Technologique Moderne (ensemble de technologies utilisées)
 ```
-Vue.js 3.5 + TypeScript 5.9 + Vite 7.2
-Pinia (gestion d'état) + Vue Router (navigation)
-Vitest (tests) + ESLint + Prettier (qualité)
+Vue.js 3.5 + TypeScript 5.9 + Vite 7.2 (outil de build ultra-rapide)
+Pinia (gestion d'état - mémorisation des données) + Vue Router (gestion de navigation entre pages)
+Vitest (framework de tests unitaires) + ESLint (analyseur de code) + Prettier (formatage automatique)
 ```
 
 ### Architecture en 5 Couches
 ```
 ┌─────────────────────────────────────┐
-│  1. PRÉSENTATION (Vue Components)  │ ← Interface utilisateur
+│  1. PRÉSENTATION (Vue Components)  │ ← Interface utilisateur (ce que voit l'utilisateur)
 ├─────────────────────────────────────┤
-│  2. GESTION D'ÉTAT (Pinia Stores)  │ ← État réactif
+│  2. GESTION D'ÉTAT (Pinia Stores)  │ ← État réactif (données vivantes de l'application)
 ├─────────────────────────────────────┤
-│  3. LOGIQUE MÉTIER (Services)      │ ← Règles métier
+│  3. LOGIQUE MÉTIER (Services)      │ ← Règles métier (règles de fonctionnement)
 ├─────────────────────────────────────┤
-│  4. ACCÈS DONNÉES (Repositories)   │ ← CRUD operations
+│  4. ACCÈS DONNÉES (Repositories)   │ ← CRUD operations (Create Read Update Delete - Créer Lire Modifier Supprimer)
 ├─────────────────────────────────────┤
-│  5. PERSISTANCE (localStorage)     │ ← Stockage
+│  5. PERSISTANCE (localStorage)     │ ← Stockage (sauvegarde des données dans le navigateur)
 └─────────────────────────────────────┘
 ```
 
 **Avantages clés :**
-- **Testabilité** : Chaque couche testable indépendamment
-- **Maintenabilité** : Modifications isolées par couche
-- **Évolutivité** : Remplacement facile (ex: localStorage → API backend)
-- **Réutilisabilité** : Logique métier réutilisable
+- **Testabilité** : Chaque couche testable indépendamment (isolation des tests)
+- **Maintenabilité** : Modifications isolées par couche (facilité de maintenance)
+- **Évolutivité** : Remplacement facile (ex: localStorage → API backend - stockage local vers serveur distant)
+- **Réutilisabilité** : Logique métier réutilisable (code réutilisable dans d'autres contextes)
 
 ---
 
@@ -84,48 +84,48 @@ Vitest (tests) + ESLint + Prettier (qualité)
 - Système d'ombres et bordures cohérent
 
 **Résultat :**
-- ✅ **Accessibilité WCAG AAA** : Contraste maximal pour tous
-- ✅ **Cohérence parfaite** : Même apparence partout
-- ✅ **Performance** : CSS optimisé 15.35 kB (3.42 kB gzippé)
-- ✅ **Maintenabilité** : Changement de thème en un seul endroit
+- ✅ **Accessibilité WCAG AAA** (Web Content Accessibility Guidelines - normes d'accessibilité web) : Contraste maximal pour tous (lisible même pour personnes malvoyantes)
+- ✅ **Cohérence parfaite** : Même apparence partout (expérience utilisateur unifiée)
+- ✅ **Performance** : CSS optimisé 15.35 kB (3.42 kB gzippé - compressé pour téléchargement rapide)
+- ✅ **Maintenabilité** : Changement de thème en un seul endroit (modification globale facilitée)
 
 ### Expérience Utilisateur Premium
 
 **Animations & Interactions :**
-- Loading spinners élégants avec rotations fluides
-- Transitions smooth (fade, slide) entre les états
-- Hover effects sophistiqués (transform, shadow)
-- Toast notifications contextuelles non-intrusives
+- Loading spinners (roues de chargement animées) élégants avec rotations fluides
+- Transitions smooth (fluides - fade/fondu, slide/glissement) entre les états
+- Hover effects (effets au survol de la souris) sophistiqués (transform/transformation, shadow/ombre)
+- Toast notifications (notifications temporaires en bas d'écran) contextuelles non-intrusives
 
-**Responsive Design :**
-- Mobile First : Optimisé d'abord pour mobile
-- 3 breakpoints : 480px, 768px, 1024px
-- CSS Grid + Flexbox pour layouts adaptatifs
-- Testé sur tous navigateurs modernes
+**Responsive Design** (design adaptatif aux différentes tailles d'écran) **:**
+- Mobile First (approche mobile d'abord) : Optimisé d'abord pour mobile puis amélioré pour desktop
+- 3 breakpoints (points de rupture - seuils d'adaptation) : 480px, 768px, 1024px
+- CSS Grid (système de grille) + Flexbox (boîte flexible) pour layouts (mises en page) adaptatifs
+- Testé sur tous navigateurs modernes (Chrome, Firefox, Safari, Edge)
 
 ---
 
 ## 🎭 SLIDE 5 : Fonctionnalités Métier (45 secondes)
 
 ### Pour les Utilisateurs
-1. **Inscription Complète** : Email, nom, prénom, téléphone avec validation
-2. **Catalogue de Services** : Grille de cards interactives avec descriptions
+1. **Inscription Complète** : Email, nom, prénom, téléphone avec validation (vérification automatique des données)
+2. **Catalogue de Services** : Grille de cards (cartes - blocs de contenu visuels) interactives avec descriptions
 3. **Réservation Intelligente** :
-   - Visualisation des créneaux disponibles
-   - Indicateurs de capacité en temps réel
-   - Prévention des doubles réservations
-4. **Gestion Personnelle** : Vue de toutes les réservations avec annulation
+   - Visualisation des créneaux disponibles (slots - plages horaires)
+   - Indicateurs de capacité en temps réel (affichage instantané des places disponibles)
+   - Prévention des doubles réservations (impossible de réserver 2 fois le même créneau)
+4. **Gestion Personnelle** : Vue de toutes les réservations avec annulation (consultation et suppression)
 
 ### Pour les Administrateurs
-1. **Gestion Services** : CRUD complet avec validation
-2. **Gestion Créneaux** : Création avec date/heure et capacité
-3. **Dashboard Moderne** : Compteurs en temps réel, listes interactives
+1. **Gestion Services** : CRUD complet (Create Read Update Delete - Créer Lire Modifier Supprimer) avec validation
+2. **Gestion Créneaux** : Création avec date/heure et capacité (nombre de places disponibles)
+3. **Dashboard Moderne** (tableau de bord - panneau de contrôle) : Compteurs en temps réel, listes interactives
 
-### Règles Métier Implémentées
-- ✅ Pas de double booking
-- ✅ Respect des capacités maximales
-- ✅ Réservations futures uniquement
-- ✅ Suppression en cascade (service → créneaux → réservations)
+### Règles Métier Implémentées (règles de fonctionnement automatiques)
+- ✅ Pas de double booking (réservation multiple du même créneau impossible)
+- ✅ Respect des capacités maximales (limite de places par créneau)
+- ✅ Réservations futures uniquement (pas de réservation dans le passé)
+- ✅ Suppression en cascade (service supprimé → créneaux et réservations automatiquement supprimés)
 
 ---
 
@@ -133,20 +133,20 @@ Vitest (tests) + ESLint + Prettier (qualité)
 
 ### 8 Pages Modernisées
 
-1. **HomeView** : Hero section avec gradient text impactant
-2. **LoginView** : Formulaire épuré avec info box
-3. **RegisterView** : Layout 2 colonnes responsive
-4. **ServicesView** : Grille de cards avec hover effects
-5. **ServiceDetailView** : Interface réservation avec slots
-6. **MyReservationsView** : Gestion avec badges de statut
-7. **AdminView** : Panel complet avec formulaires modernes
-8. **AppHeader** : Navigation sticky avec logo personnalisé
+1. **HomeView** (page d'accueil) : Hero section (section d'en-tête principale avec grand titre) avec gradient text (texte avec dégradé de couleurs) impactant
+2. **LoginView** (page de connexion) : Formulaire épuré avec info box (boîte d'information)
+3. **RegisterView** (page d'inscription) : Layout (mise en page) 2 colonnes responsive (adaptatif mobile/desktop)
+4. **ServicesView** (catalogue de services) : Grille de cards (cartes) avec hover effects (effets au survol de la souris)
+5. **ServiceDetailView** (détails d'un service) : Interface réservation avec slots (créneaux horaires)
+6. **MyReservationsView** (mes réservations) : Gestion avec badges (étiquettes visuelles) de statut
+7. **AdminView** (administration) : Panel (panneau de contrôle) complet avec formulaires modernes
+8. **AppHeader** (en-tête) : Navigation sticky (barre fixe qui reste visible au scroll - défilement) avec logo personnalisé
 
 **Détails de Finition :**
-- Micro-interactions (effets ripple au clic)
-- Empty states avec émojis et call-to-action
-- Form validation en temps réel
-- Loading states avec spinners animés
+- Micro-interactions (petites animations interactives) : effets ripple (effet d'onde) au clic
+- Empty states (états vides - quand aucune donnée à afficher) avec émojis et call-to-action (bouton d'action incitant l'utilisateur)
+- Form validation (validation de formulaire - vérification des données) en temps réel
+- Loading states (états de chargement) avec spinners (roues de chargement) animés
 
 ---
 
@@ -154,23 +154,23 @@ Vitest (tests) + ESLint + Prettier (qualité)
 
 ### Outils de Qualité
 
-**Tests Unitaires (Vitest) :**
-- AuthService : Validation email, téléphone, unicité
-- BookingService : Prévention double réservation, capacité
-- ServiceManagement : CRUD, règles métier
-- Couverture : Tous les services critiques testés
+**Tests Unitaires** (tests automatisés de parties isolées du code) **- Vitest :**
+- AuthService : Validation email, téléphone, unicité (vérification des règles d'inscription)
+- BookingService : Prévention double réservation, capacité (tests des règles de réservation)
+- ServiceManagement : CRUD, règles métier (tests de gestion des services)
+- Couverture : Tous les services critiques testés (sécurité et fiabilité garanties)
 
-**Analyse Statique :**
-- ESLint : Détection d'erreurs automatique
-- Prettier : Formatage cohérent du code
-- TypeScript Strict : Type safety garanti
-- Pas d'erreur de compilation : Build 100% propre
+**Analyse Statique** (vérification automatique du code sans l'exécuter) **:**
+- ESLint : Détection d'erreurs automatique (analyseur de code JavaScript)
+- Prettier : Formatage cohérent du code (mise en forme automatique uniforme)
+- TypeScript Strict : Type safety (sécurité des types) garanti
+- Pas d'erreur de compilation : Build (construction de l'application) 100% propre
 
-**Métriques :**
-- ✅ Build : 1.43s (ultra rapide)
-- ✅ Bundle JS : 106.92 kB (41.53 kB gzippé)
-- ✅ Bundle CSS : 15.35 kB (3.42 kB gzippé)
-- ✅ Performance : Optimale (animations GPU-accelerated)
+**Métriques** (mesures de performance) **:**
+- ✅ Build : 1.43s (ultra rapide - compilation en moins de 2 secondes)
+- ✅ Bundle JS (fichier JavaScript regroupé) : 106.92 kB (41.53 kB gzippé - compressé)
+- ✅ Bundle CSS (fichier CSS regroupé) : 15.35 kB (3.42 kB gzippé)
+- ✅ Performance : Optimale (animations GPU-accelerated - accélérées par carte graphique)
 
 ---
 
@@ -179,24 +179,24 @@ Vitest (tests) + ESLint + Prettier (qualité)
 ### Excellence Technique
 
 1. **Architecture Exemplaire**
-   - Séparation des responsabilités stricte
-   - Pattern Repository pour l'accès aux données
-   - Services pour la logique métier isolée
+   - Séparation des responsabilités stricte (chaque module a un rôle unique)
+   - Pattern Repository (modèle de conception) pour l'accès aux données (abstraction du stockage)
+   - Services pour la logique métier isolée (règles métier indépendantes de l'interface)
 
 2. **Code Professionnel**
-   - TypeScript strict : Sécurité maximale
-   - Interfaces bien définies
-   - Documentation inline avec types
+   - TypeScript strict : Sécurité maximale (typage fort - détection d'erreurs avant exécution)
+   - Interfaces bien définies (contrats clairs entre modules)
+   - Documentation inline (dans le code) avec types (auto-documenté)
 
 3. **Design de Qualité Entreprise**
-   - Design system complet et cohérent
-   - Accessibilité WCAG AAA respectée
-   - UX moderne et intuitive
+   - Design system (système de conception unifié) complet et cohérent
+   - Accessibilité WCAG AAA (normes d'accessibilité maximales) respectée
+   - UX (User Experience - expérience utilisateur) moderne et intuitive
 
 4. **Maintenabilité Optimale**
-   - Code modulaire et réutilisable
-   - Tests unitaires pour fiabilité
-   - Facile à faire évoluer (localStorage → API)
+   - Code modulaire (divisé en modules indépendants) et réutilisable
+   - Tests unitaires pour fiabilité (tests automatisés garantissant le bon fonctionnement)
+   - Facile à faire évoluer (localStorage → API - stockage local vers serveur distant)
 
 ---
 
@@ -204,48 +204,48 @@ Vitest (tests) + ESLint + Prettier (qualité)
 
 ### Principes de Conception
 
-✅ **SOLID Principles**
-- Single Responsibility : Chaque classe un seul rôle
-- Open/Closed : Extensions sans modifications
-- Dependency Inversion : Dépendances vers abstractions
+✅ **SOLID Principles** (5 principes fondamentaux de la programmation orientée objet)
+- Single Responsibility (responsabilité unique) : Chaque classe un seul rôle
+- Open/Closed (ouvert/fermé) : Extensions sans modifications (ajout de fonctionnalités sans toucher au code existant)
+- Dependency Inversion (inversion de dépendances) : Dépendances vers abstractions (modules dépendent d'interfaces, pas d'implémentations concrètes)
 
-✅ **Clean Code**
-- Nommage explicite et cohérent
-- Fonctions courtes et focalisées
-- Pas de duplication de code
+✅ **Clean Code** (code propre et lisible)
+- Nommage explicite et cohérent (variables et fonctions avec noms clairs)
+- Fonctions courtes et focalisées (une fonction = une tâche)
+- Pas de duplication de code (DRY - Don't Repeat Yourself - ne pas se répéter)
 
-✅ **Architecture en Couches**
-- Séparation Présentation / Logique / Données
-- Couplage faible entre les couches
-- Testabilité maximale
+✅ **Architecture en Couches** (organisation du code en niveaux)
+- Séparation Présentation / Logique / Données (isolation des responsabilités)
+- Couplage faible (dépendances minimales) entre les couches
+- Testabilité maximale (facilité de tester chaque couche indépendamment)
 
-✅ **Modern Web Standards**
-- CSS Variables natives (pas de préprocesseur)
-- Modules ES6
-- Composition API (Vue 3)
+✅ **Modern Web Standards** (standards web modernes)
+- CSS Variables natives (variables CSS intégrées - pas de préprocesseur SASS/LESS)
+- Modules ES6 (système de modules JavaScript moderne - import/export)
+- Composition API (nouvelle API Vue 3 basée sur fonctions - plus flexible que Options API)
 
 ---
 
 ## 🔮 SLIDE 10 : Évolutions Futures (20 secondes)
 
-### Roadmap Potentielle
+### Roadmap Potentielle (feuille de route - plan d'évolution)
 
 **Court Terme :**
-- [ ] Intégration API REST backend
-- [ ] Authentification JWT avec mots de passe
-- [ ] Notifications email automatiques
+- [ ] Intégration API REST backend (connexion à un serveur distant au lieu de localStorage)
+- [ ] Authentification JWT (JSON Web Token - jeton d'authentification sécurisé) avec mots de passe
+- [ ] Notifications email automatiques (envoi d'emails de confirmation/rappel)
 
 **Moyen Terme :**
-- [ ] Vue calendrier pour visualisation temporelle
-- [ ] Catégories de services et filtres avancés
-- [ ] Historique et statistiques détaillées
-- [ ] Mode sombre (dark mode)
+- [ ] Vue calendrier pour visualisation temporelle (affichage type Google Calendar)
+- [ ] Catégories de services et filtres avancés (recherche et tri améliorés)
+- [ ] Historique et statistiques détaillées (analytics - analyse des données de réservation)
+- [ ] Mode sombre (dark mode - thème sombre pour confort visuel)
 
 **Long Terme :**
-- [ ] Application mobile (React Native / Flutter)
-- [ ] Support multilingue (i18n)
-- [ ] Intégration paiements en ligne
-- [ ] API publique pour intégrations tierces
+- [ ] Application mobile (React Native / Flutter - frameworks pour iOS/Android)
+- [ ] Support multilingue (i18n - internationalization - traduction en plusieurs langues)
+- [ ] Intégration paiements en ligne (Stripe, PayPal - paiement par carte bancaire)
+- [ ] API publique pour intégrations tierces (permettre à d'autres applications de se connecter)
 
 ---
 
@@ -254,16 +254,16 @@ Vitest (tests) + ESLint + Prettier (qualité)
 ### Pourquoi ce Projet se Démarque
 
 **Un exemple parfait de bonnes pratiques :**
-- ✅ Architecture propre et maintenable
-- ✅ Design moderne et professionnel
-- ✅ Code de qualité production
-- ✅ Prêt à évoluer vers un vrai backend
+- ✅ Architecture propre et maintenable (organisation claire du code)
+- ✅ Design moderne et professionnel (interface élégante et accessible)
+- ✅ Code de qualité production (prêt pour mise en ligne réelle)
+- ✅ Prêt à évoluer vers un vrai backend (architecture facilitant migration vers serveur)
 
 **Ce projet démontre :**
-- Une maîtrise complète de Vue.js + TypeScript
-- Une compréhension profonde des architectures logicielles
-- Une attention aux détails (UX, accessibilité, performance)
-- Une capacité à produire du code professionnel
+- Une maîtrise complète de Vue.js + TypeScript (framework moderne et typage strict)
+- Une compréhension profonde des architectures logicielles (séparation en couches, patterns de conception)
+- Une attention aux détails (UX/expérience utilisateur, accessibilité, performance)
+- Une capacité à produire du code professionnel (standards industriels respectés)
 
 ---
 
@@ -272,45 +272,45 @@ Vitest (tests) + ESLint + Prettier (qualité)
 **Merci pour votre attention !**
 
 Je reste à votre disposition pour :
-- 🔍 Démonstration live de l'application
-- 💻 Exploration approfondie du code
-- 🎨 Détails sur le design system
-- 🏗️ Discussion sur les choix d'architecture
+- 🔍 Démonstration live (en direct) de l'application
+- 💻 Exploration approfondie du code (code review - revue détaillée)
+- 🎨 Détails sur le design system (système de conception - tokens visuels)
+- 🏗️ Discussion sur les choix d'architecture (patterns utilisés - modèles de conception)
 
 **Contacts :**
-- 📁 Repository : `git clone <url>`
-- 🌐 Live Demo : `npm run dev` → http://localhost:5173
-- 📧 Admin test : admin@example.com
+- 📁 Repository (dépôt Git - code source) : `git clone <url>`
+- 🌐 Live Demo (démonstration en direct) : `npm run dev` → http://localhost:5173
+- 📧 Admin test (compte administrateur de test) : admin@example.com
 
 ---
 
 ## 📊 ANNEXE : Cheat Sheet pour Questions
 
-### Questions Techniques Fréquentes
+### Questions Techniques Fréquentes (FAQ - Frequently Asked Questions)
 
 **Q: Pourquoi Vue.js plutôt que React ?**
-R: Framework progressif, courbe d'apprentissage douce, excellent support TypeScript, Composition API moderne similaire à React Hooks mais plus intuitive.
+R: Framework progressif (apprentissage par étapes), courbe d'apprentissage douce (facile à apprendre), excellent support TypeScript, Composition API (nouvelle API Vue 3) moderne similaire à React Hooks (fonctions réutilisables React) mais plus intuitive.
 
 **Q: Pourquoi localStorage et pas une vraie API ?**
-R: Simplifie la démo et le focus sur l'architecture. Le pattern Repository permet de remplacer facilement localStorage par des appels API sans toucher au reste du code.
+R: Simplifie la démo et le focus sur l'architecture. Le pattern Repository (modèle de conception) permet de remplacer facilement localStorage par des appels API (communication avec serveur) sans toucher au reste du code.
 
 **Q: Comment garantissez-vous la qualité ?**
-R: TypeScript strict, tests unitaires (Vitest), ESLint, Prettier, architecture en couches testables indépendamment.
+R: TypeScript strict (typage fort), tests unitaires (Vitest - tests automatisés), ESLint (analyseur de code), Prettier (formatage automatique), architecture en couches testables indépendamment.
 
 **Q: Temps de développement ?**
-R: Architecture initiale + design system (refactoring complet avec bonnes pratiques appliquées).
+R: Architecture initiale + design system (refactoring complet - restructuration du code avec bonnes pratiques appliquées).
 
-**Q: Scalabilité ?**
-R: Architecture prête pour migration vers backend (NestJS, Express), patterns déjà en place (Repository, Service, DTO via types TypeScript).
+**Q: Scalabilité ?** (capacité à grandir - passage à l'échelle)
+R: Architecture prête pour migration vers backend (NestJS, Express - frameworks serveur Node.js), patterns déjà en place (Repository, Service, DTO via types TypeScript - Data Transfer Object - objet de transfert de données).
 
-**Q: Accessibilité ?**
-R: WCAG AAA (contraste maximal), navigation clavier complète, aria-labels, focus states visibles, testé avec lecteurs d'écran.
+**Q: Accessibilité ?** (utilisabilité par tous, y compris personnes handicapées)
+R: WCAG AAA (Web Content Accessibility Guidelines - niveau maximal de contraste), navigation clavier complète (utilisable sans souris), aria-labels (étiquettes pour lecteurs d'écran utilisés par malvoyants), focus states (bordures visuelles) visibles, testé avec lecteurs d'écran.
 
-**Q: Performance ?**
-R: Lazy loading, bundle optimisé (41.53 kB gzippé), animations GPU, CSS scopé, pas de re-renders inutiles grâce à Pinia.
+**Q: Performance ?** (vitesse et fluidité)
+R: Lazy loading (chargement différé - composants chargés uniquement quand nécessaires), bundle optimisé (fichiers regroupés - 41.53 kB gzippé/compressé), animations GPU (accélérées par carte graphique), CSS scopé (isolé par composant - pas de conflits de styles), pas de re-renders inutiles (rafraîchissements d'affichage évités) grâce à Pinia.
 
-**Q: Support navigateurs ?**
-R: Tous navigateurs modernes (Chrome, Firefox, Safari, Edge), fallbacks pour anciennes versions, testé Mobile Safari.
+**Q: Support navigateurs ?** (compatibilité)
+R: Tous navigateurs modernes (Chrome, Firefox, Safari, Edge), fallbacks (solutions de secours) pour anciennes versions, testé Mobile Safari (navigateur iPhone/iPad).
 
 ---
 
