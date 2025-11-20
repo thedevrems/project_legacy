@@ -1,80 +1,91 @@
 <template>
   <div class="register">
-    <div class="register-card">
-      <h1>Create Account</h1>
-      <p class="subtitle">Register to access the booking system</p>
+    <div class="register-container">
+      <div class="register-card">
+        <div class="card-header">
+          <h1 class="card-title">Inscription</h1>
+          <p class="card-subtitle">Créez votre compte pour accéder au système de réservation</p>
+        </div>
 
-      <form @submit.prevent="handleRegister">
-        <div class="form-row">
+        <form @submit.prevent="handleRegister" class="register-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">Prénom *</label>
+              <input
+                id="firstName"
+                v-model="formData.firstName"
+                type="text"
+                placeholder="Jean"
+                required
+                :disabled="loading"
+                autocomplete="given-name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">Nom *</label>
+              <input
+                id="lastName"
+                v-model="formData.lastName"
+                type="text"
+                placeholder="Dupont"
+                required
+                :disabled="loading"
+                autocomplete="family-name"
+              />
+            </div>
+          </div>
+
           <div class="form-group">
-            <label for="firstName">First Name *</label>
+            <label for="email">Adresse email *</label>
             <input
-              id="firstName"
-              v-model="formData.firstName"
-              type="text"
-              placeholder="John"
+              id="email"
+              v-model="formData.email"
+              type="email"
+              placeholder="jean.dupont@exemple.com"
               required
               :disabled="loading"
+              autocomplete="email"
             />
           </div>
 
           <div class="form-group">
-            <label for="lastName">Last Name *</label>
+            <label for="phone">Téléphone (optionnel)</label>
             <input
-              id="lastName"
-              v-model="formData.lastName"
-              type="text"
-              placeholder="Doe"
-              required
+              id="phone"
+              v-model="formData.phone"
+              type="tel"
+              placeholder="+33 6 12 34 56 78"
               :disabled="loading"
+              autocomplete="tel"
             />
+            <small class="help-text">Format : +33 6 12 34 56 78 ou 0612345678</small>
           </div>
+
+          <div v-if="error" class="error-message">{{ error }}</div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg" :disabled="loading">
+            {{ loading ? 'Création du compte...' : 'Créer mon compte' }}
+          </button>
+        </form>
+
+        <div class="card-footer">
+          <p class="login-prompt">
+            Vous avez déjà un compte ?
+            <router-link to="/login" class="login-link">Se connecter</router-link>
+          </p>
         </div>
 
-        <div class="form-group">
-          <label for="email">Email *</label>
-          <input
-            id="email"
-            v-model="formData.email"
-            type="email"
-            placeholder="john.doe@example.com"
-            required
-            :disabled="loading"
-          />
+        <div class="info-message">
+          <div class="info-header">
+            <span class="info-icon">ℹ</span>
+            <strong>Information</strong>
+          </div>
+          <p class="info-text">
+            Système d'inscription simplifié. Les accès administrateur sont automatiquement accordés
+            aux adresses <code>admin@example.com</code> et <code>admin@booking.com</code>.
+          </p>
         </div>
-
-        <div class="form-group">
-          <label for="phone">Phone Number (optional)</label>
-          <input
-            id="phone"
-            v-model="formData.phone"
-            type="tel"
-            placeholder="+33 6 12 34 56 78"
-            :disabled="loading"
-          />
-          <small class="help-text">Format: +33 6 12 34 56 78 or 0612345678</small>
-        </div>
-
-        <div v-if="error" class="error-message">{{ error }}</div>
-
-        <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
-          {{ loading ? 'Creating account...' : 'Create Account' }}
-        </button>
-      </form>
-
-      <div class="login-link">
-        <p>
-          Already have an account?
-          <router-link to="/login">Login here</router-link>
-        </p>
-      </div>
-
-      <div class="info-box">
-        <p><strong>Note:</strong> This is a simplified registration system.</p>
-        <p>
-          Admin access is automatically granted to <strong>admin@example.com</strong> and
-          <strong>admin@booking.com</strong>.
-        </p>
       </div>
     </div>
   </div>
@@ -116,7 +127,7 @@ async function handleRegister() {
       router.push('/login')
     }
   } else {
-    error.value = result.error || 'Registration failed'
+    error.value = result.error || "Échec de l'inscription"
   }
 
   loading.value = false
@@ -125,113 +136,253 @@ async function handleRegister() {
 
 <style scoped>
 .register {
-  min-height: 80vh;
+  min-height: calc(100vh - 200px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: var(--space-6);
+}
+
+.register-container {
+  width: 100%;
+  max-width: 580px;
 }
 
 .register-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 550px;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-base);
 }
 
-h1 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
+.register-card:hover {
+  box-shadow: var(--shadow-xl);
 }
 
-.subtitle {
+/* ============================================
+   CARD HEADER
+   ============================================ */
+
+.card-header {
   text-align: center;
-  color: #666;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
+}
+
+.card-title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-black);
+  margin-bottom: var(--space-3);
+  letter-spacing: -0.02em;
+}
+
+.card-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+/* ============================================
+   FORM
+   ============================================ */
+
+.register-form {
+  margin-bottom: var(--space-6);
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
-label {
+.form-row .form-group {
+  margin-bottom: 0;
+}
+
+.form-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  color: #2c3e50;
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-input {
+.form-group input {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-fast);
+  background-color: var(--color-white);
 }
 
-input:focus {
+.form-group input:hover:not(:disabled) {
+  border-color: var(--color-border-hover);
+}
+
+.form-group input:focus {
   outline: none;
-  border-color: #42b983;
+  border-color: var(--color-black);
+  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1);
 }
 
-input:disabled {
-  background: #f5f5f5;
+.form-group input:disabled {
+  background-color: var(--color-gray-100);
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .help-text {
   display: block;
-  margin-top: 0.25rem;
-  color: #666;
-  font-size: 0.85rem;
+  margin-top: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-normal);
+}
+
+/* ============================================
+   CARD FOOTER
+   ============================================ */
+
+.card-footer {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-6);
+  text-align: center;
+}
+
+.login-prompt {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
 }
 
 .login-link {
-  margin-top: 1.5rem;
-  text-align: center;
-  color: #666;
-}
-
-.login-link a {
-  color: #42b983;
+  color: var(--color-black);
+  font-weight: var(--font-weight-semibold);
   text-decoration: none;
-  font-weight: 500;
+  transition: color var(--transition-fast);
+  border-bottom: 2px solid var(--color-black);
+  padding-bottom: 2px;
 }
 
-.login-link a:hover {
-  text-decoration: underline;
+.login-link:hover {
+  color: var(--color-gray-700);
+  border-bottom-color: var(--color-gray-700);
 }
 
-.info-box {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: #f0f9ff;
-  border: 1px solid #bee3f8;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  color: #2c5282;
+/* ============================================
+   INFO BOX
+   ============================================ */
+
+.info-message {
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+  background-color: var(--color-gray-100);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
 }
 
-.info-box p {
-  margin: 0.5rem 0;
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-black);
 }
 
-.info-box strong {
-  color: #1a365d;
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-radius: 50%;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.info-text {
+  color: var(--color-text-secondary);
+  margin: var(--space-2) 0;
+  line-height: var(--line-height-relaxed);
+}
+
+.info-text code {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  border: 1px solid var(--color-border);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .register {
+    padding: var(--space-4);
+  }
+
+  .register-card {
+    padding: var(--space-8);
+  }
+
+  .card-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .card-subtitle {
+    font-size: var(--font-size-sm);
+  }
 }
 
 @media (max-width: 600px) {
   .form-row {
     grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .form-row .form-group {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .register {
+    padding: var(--space-3);
+  }
+
+  .register-card {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+  }
+
+  .card-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .card-subtitle {
+    font-size: var(--font-size-sm);
   }
 }
 </style>

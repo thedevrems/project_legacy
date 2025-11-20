@@ -1,42 +1,52 @@
 <template>
   <div class="login">
-    <div class="login-card">
-      <h1>Login</h1>
-      <p class="subtitle">Enter your email to access the booking system</p>
-
-      <form @submit.prevent="handleLogin">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            id="email"
-            v-model="email"
-            type="email"
-            placeholder="your.email@example.com"
-            required
-            :disabled="loading"
-          />
+    <div class="login-container">
+      <div class="login-card">
+        <div class="card-header">
+          <h1 class="card-title">Connexion</h1>
+          <p class="card-subtitle">Accédez à votre espace de réservation</p>
         </div>
 
-        <div v-if="error" class="error-message">{{ error }}</div>
+        <form @submit.prevent="handleLogin" class="login-form">
+          <div class="form-group">
+            <label for="email">Adresse email</label>
+            <input
+              id="email"
+              v-model="email"
+              type="email"
+              placeholder="votre.email@exemple.com"
+              required
+              :disabled="loading"
+              autocomplete="email"
+            />
+          </div>
 
-        <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
-          {{ loading ? 'Logging in...' : 'Login' }}
-        </button>
-      </form>
+          <div v-if="error" class="error-message">{{ error }}</div>
 
-      <div class="register-link">
-        <p>
-          Don't have an account?
-          <router-link to="/register">Create one here</router-link>
-        </p>
-      </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg" :disabled="loading">
+            {{ loading ? 'Connexion...' : 'Se connecter' }}
+          </button>
+        </form>
 
-      <div class="info-box">
-        <p><strong>Note:</strong> This is a simplified authentication system (email only).</p>
-        <p>
-          Use <strong>admin@example.com</strong> or <strong>admin@booking.com</strong> for admin
-          access.
-        </p>
+        <div class="card-footer">
+          <p class="register-prompt">
+            Pas encore de compte ?
+            <router-link to="/register" class="register-link">Créer un compte</router-link>
+          </p>
+        </div>
+
+        <div class="info-message">
+          <div class="info-header">
+            <span class="info-icon">ℹ</span>
+            <strong>Information</strong>
+          </div>
+          <p class="info-text">
+            Système d'authentification simplifié (email uniquement, sans mot de passe).
+          </p>
+          <p class="info-text">
+            Accès admin : <code>admin@example.com</code> ou <code>admin@booking.com</code>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -65,7 +75,7 @@ async function handleLogin() {
     const redirect = (route.query.redirect as string) || '/services'
     router.push(redirect)
   } else {
-    error.value = result.error || 'Login failed'
+    error.value = result.error || 'Échec de la connexion'
   }
 
   loading.value = false
@@ -74,94 +84,219 @@ async function handleLogin() {
 
 <style scoped>
 .login {
-  min-height: 80vh;
+  min-height: calc(100vh - 200px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: var(--space-6);
+}
+
+.login-container {
+  width: 100%;
+  max-width: 480px;
 }
 
 .login-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 450px;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-base);
 }
 
-h1 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
+.login-card:hover {
+  box-shadow: var(--shadow-xl);
 }
 
-.subtitle {
+/* ============================================
+   CARD HEADER
+   ============================================ */
+
+.card-header {
   text-align: center;
-  color: #666;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
+}
+
+.card-title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-black);
+  margin-bottom: var(--space-3);
+  letter-spacing: -0.02em;
+}
+
+.card-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+/* ============================================
+   FORM
+   ============================================ */
+
+.login-form {
+  margin-bottom: var(--space-6);
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
-label {
+.form-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  color: #2c3e50;
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-input {
+.form-group input {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-fast);
+  background-color: var(--color-white);
 }
 
-input:focus {
+.form-group input:hover:not(:disabled) {
+  border-color: var(--color-border-hover);
+}
+
+.form-group input:focus {
   outline: none;
-  border-color: #42b983;
+  border-color: var(--color-black);
+  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1);
 }
 
-input:disabled {
-  background: #f5f5f5;
+.form-group input:disabled {
+  background-color: var(--color-gray-100);
   cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ============================================
+   CARD FOOTER
+   ============================================ */
+
+.card-footer {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-6);
+  text-align: center;
+}
+
+.register-prompt {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
 }
 
 .register-link {
-  margin-top: 1.5rem;
-  text-align: center;
-  color: #666;
-}
-
-.register-link a {
-  color: #42b983;
+  color: var(--color-black);
+  font-weight: var(--font-weight-semibold);
   text-decoration: none;
-  font-weight: 500;
+  transition: color var(--transition-fast);
+  border-bottom: 2px solid var(--color-black);
+  padding-bottom: 2px;
 }
 
-.register-link a:hover {
-  text-decoration: underline;
+.register-link:hover {
+  color: var(--color-gray-700);
+  border-bottom-color: var(--color-gray-700);
 }
 
-.info-box {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: #f0f9ff;
-  border: 1px solid #bee3f8;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  color: #2c5282;
+/* ============================================
+   INFO BOX
+   ============================================ */
+
+.info-message {
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+  background-color: var(--color-gray-100);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
 }
 
-.info-box p {
-  margin: 0.5rem 0;
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-black);
 }
 
-.info-box strong {
-  color: #1a365d;
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-radius: 50%;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.info-text {
+  color: var(--color-text-secondary);
+  margin: var(--space-2) 0;
+  line-height: var(--line-height-relaxed);
+}
+
+.info-text code {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  border: 1px solid var(--color-border);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .login {
+    padding: var(--space-4);
+  }
+
+  .login-card {
+    padding: var(--space-8);
+  }
+
+  .card-title {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .login {
+    padding: var(--space-3);
+  }
+
+  .login-card {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+  }
+
+  .card-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .card-subtitle {
+    font-size: var(--font-size-sm);
+  }
 }
 </style>

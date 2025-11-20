@@ -1,27 +1,46 @@
 <template>
-  <div class="services">
-    <h1>Available Services</h1>
+  <div class="services-page">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Services Disponibles</h1>
+        <div class="title-underline"></div>
+      </div>
 
-    <div v-if="servicesStore.loading" class="loading">Loading services...</div>
+      <div v-if="servicesStore.loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Chargement des services...</p>
+      </div>
 
-    <div v-else-if="servicesStore.services.length === 0" class="empty-state">
-      <p>No services available at the moment.</p>
-      <p v-if="authStore.isAdmin">
-        <router-link to="/admin">Go to Admin Panel to add services</router-link>
-      </p>
-    </div>
-
-    <div v-else class="services-grid">
-      <div v-for="service in servicesStore.services" :key="service.id" class="service-card">
-        <h3>{{ service.name }}</h3>
-        <p v-if="service.description" class="description">{{ service.description }}</p>
-        <p v-if="service.duration" class="duration">Duration: {{ service.duration }} minutes</p>
-        <router-link
-          :to="{ name: 'service-detail', params: { id: service.id } }"
-          class="btn btn-primary"
-        >
-          View & Book
+      <div v-else-if="servicesStore.services.length === 0" class="empty-state">
+        <div class="empty-icon">📋</div>
+        <h2 class="empty-title">Aucun service disponible</h2>
+        <p class="empty-text">Il n'y a pas de services disponibles pour le moment.</p>
+        <router-link v-if="authStore.isAdmin" to="/admin" class="btn btn-primary btn-lg">
+          Ajouter un service
         </router-link>
+      </div>
+
+      <div v-else class="services-grid">
+        <div v-for="service in servicesStore.services" :key="service.id" class="service-card">
+          <div class="card-content">
+            <h3 class="service-name">{{ service.name }}</h3>
+            <p v-if="service.description" class="service-description">
+              {{ service.description }}
+            </p>
+            <div v-if="service.duration" class="service-meta">
+              <span class="meta-label">Durée</span>
+              <span class="meta-value">{{ service.duration }} min</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <router-link
+              :to="{ name: 'service-detail', params: { id: service.id } }"
+              class="btn btn-primary btn-block"
+            >
+              Voir les créneaux
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -41,64 +60,206 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.services {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+.services-page {
+  min-height: calc(100vh - 200px);
+  padding: var(--space-10) 0;
 }
 
-h1 {
+/* ============================================
+   PAGE HEADER
+   ============================================ */
+
+.page-header {
   text-align: center;
-  color: #2c3e50;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-12);
 }
 
-.loading,
+.page-title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-black);
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+}
+
+.title-underline {
+  width: 80px;
+  height: 4px;
+  background-color: var(--color-black);
+  margin: 0 auto;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+
+.loading-state {
+  text-align: center;
+  padding: var(--space-20) var(--space-6);
+  color: var(--color-text-secondary);
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--color-gray-200);
+  border-top-color: var(--color-black);
+  border-radius: 50%;
+  margin: 0 auto var(--space-4);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+
 .empty-state {
   text-align: center;
-  padding: 3rem;
-  color: #666;
+  padding: var(--space-20) var(--space-6);
 }
 
-.empty-state a {
-  color: #42b983;
-  text-decoration: underline;
+.empty-icon {
+  font-size: var(--font-size-5xl);
+  margin-bottom: var(--space-4);
+  opacity: 0.5;
 }
+
+.empty-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-black);
+  margin-bottom: var(--space-3);
+}
+
+.empty-text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================
+   SERVICES GRID
+   ============================================ */
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-8);
 }
 
 .service-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
   display: flex;
   flex-direction: column;
+  transition: all var(--transition-base);
+  min-height: 200px;
 }
 
-.service-card h3 {
-  color: #2c3e50;
-  margin-bottom: 1rem;
+.service-card:hover {
+  border-color: var(--color-black);
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
 }
 
-.description {
-  color: #666;
-  margin-bottom: 1rem;
-  flex-grow: 1;
-  line-height: 1.6;
+.card-content {
+  flex: 1;
+  margin-bottom: var(--space-6);
 }
 
-.duration {
-  color: #42b983;
-  font-weight: 500;
-  margin-bottom: 1rem;
+.service-name {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-black);
+  margin-bottom: var(--space-4);
+  line-height: var(--line-height-tight);
 }
 
-.service-card .btn {
+.service-description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-4);
+}
+
+.service-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-gray-100);
+  border-radius: var(--radius-md);
   margin-top: auto;
+}
+
+.meta-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.meta-value {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-black);
+  font-family: var(--font-family-mono);
+}
+
+.card-actions {
+  margin-top: auto;
+  padding-top: var(--space-4);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .services-page {
+    padding: var(--space-8) 0;
+  }
+
+  .page-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .page-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .services-grid {
+    gap: var(--space-6);
+  }
+
+  .service-card {
+    padding: var(--space-6);
+  }
+}
+
+@media (max-width: 480px) {
+  .services-page {
+    padding: var(--space-6) 0;
+  }
+
+  .page-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

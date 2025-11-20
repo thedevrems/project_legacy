@@ -1,37 +1,85 @@
 <template>
   <div class="home">
-    <h1>Welcome to Booking System</h1>
-    <div class="home-content">
-      <p>A modern booking management system built with Vue.js</p>
+    <div class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Système de
+          <span class="hero-highlight">Réservation</span>
+        </h1>
+        <p class="hero-subtitle">
+          Une plateforme moderne pour gérer vos réservations de services en toute simplicité
+        </p>
 
-      <div v-if="!authStore.isAuthenticated" class="actions">
-        <router-link to="/register" class="btn btn-primary">Create Account</router-link>
-        <router-link to="/login" class="btn btn-secondary">Login</router-link>
+        <div v-if="!authStore.isAuthenticated" class="hero-actions">
+          <router-link to="/register" class="btn btn-primary btn-lg">
+            Créer un compte
+          </router-link>
+          <router-link to="/login" class="btn btn-outline btn-lg">
+            Se connecter
+          </router-link>
+        </div>
+
+        <div v-else class="hero-actions">
+          <router-link to="/services" class="btn btn-primary btn-lg">
+            Parcourir les services
+          </router-link>
+          <router-link to="/my-reservations" class="btn btn-secondary btn-lg">
+            Mes réservations
+          </router-link>
+          <router-link v-if="authStore.isAdmin" to="/admin" class="btn btn-admin btn-lg">
+            Administration
+          </router-link>
+        </div>
+      </div>
+    </div>
+
+    <div class="features-section">
+      <div class="section-header">
+        <h2 class="section-title">Fonctionnalités</h2>
+        <div class="title-underline"></div>
       </div>
 
-      <div v-else class="actions">
-        <router-link to="/services" class="btn btn-primary">Browse Services</router-link>
-        <router-link to="/my-reservations" class="btn btn-secondary">
-          My Reservations
-        </router-link>
-        <router-link v-if="authStore.isAdmin" to="/admin" class="btn btn-admin">
-          Admin Panel
-        </router-link>
-      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-number">01</div>
+          <h3 class="feature-title">Réservation Rapide</h3>
+          <p class="feature-description">
+            Parcourez les services disponibles et réservez vos créneaux horaires en quelques clics
+          </p>
+        </div>
 
-      <div class="features">
-        <div class="feature">
-          <h3>📅 Easy Booking</h3>
-          <p>Browse services and book available time slots effortlessly</p>
+        <div class="feature-card">
+          <div class="feature-number">02</div>
+          <h3 class="feature-title">Gestion Simplifiée</h3>
+          <p class="feature-description">
+            Consultez et annulez vos réservations à venir à tout moment depuis votre espace personnel
+          </p>
         </div>
-        <div class="feature">
-          <h3>🔍 Manage Reservations</h3>
-          <p>View and cancel your upcoming reservations anytime</p>
+
+        <div class="feature-card">
+          <div class="feature-number">03</div>
+          <h3 class="feature-title">Interface Moderne</h3>
+          <p class="feature-description">
+            Profitez d'une interface épurée et intuitive avec des mises à jour en temps réel
+          </p>
         </div>
-        <div class="feature">
-          <h3>⚡ Simple & Fast</h3>
-          <p>Clean interface with instant updates and confirmations</p>
-        </div>
+      </div>
+    </div>
+
+    <div class="stats-section">
+      <div class="stat-item">
+        <div class="stat-value">Simple</div>
+        <div class="stat-label">Interface intuitive</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">Rapide</div>
+        <div class="stat-label">Réservation instantanée</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">Fiable</div>
+        <div class="stat-label">Système sécurisé</div>
       </div>
     </div>
   </div>
@@ -45,55 +93,279 @@ const authStore = useAuthStore()
 
 <style scoped>
 .home {
-  max-width: 1200px;
+  min-height: calc(100vh - 200px);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero {
+  background-color: var(--color-white);
+  padding: var(--space-20) var(--space-6);
+  border-bottom: 2px solid var(--color-black);
+}
+
+.hero-content {
+  max-width: var(--container-lg);
   margin: 0 auto;
-  padding: 2rem;
-}
-
-h1 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 2rem;
-}
-
-.home-content {
   text-align: center;
 }
 
-.home-content > p {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 2rem;
+.hero-title {
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-black);
+  margin-bottom: var(--space-6);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
-.actions {
+.hero-highlight {
+  display: block;
+  background: linear-gradient(to right, var(--color-black) 0%, var(--color-gray-700) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto var(--space-10);
+  line-height: var(--line-height-relaxed);
+  font-weight: var(--font-weight-normal);
+}
+
+.hero-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
   justify-content: center;
-  margin-bottom: 3rem;
+  flex-wrap: wrap;
 }
 
-.features {
+/* ============================================
+   FEATURES SECTION
+   ============================================ */
+
+.features-section {
+  background-color: var(--color-background-alt);
+  padding: var(--space-20) var(--space-6);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.section-title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-black);
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.title-underline {
+  width: 80px;
+  height: 4px;
+  background-color: var(--color-black);
+  margin: 0 auto;
+}
+
+.features-grid {
+  max-width: var(--container-xl);
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-8);
 }
 
-.feature {
-  padding: 1.5rem;
-  border-radius: 8px;
-  background: #f8f9fa;
+.feature-card {
+  background-color: var(--color-white);
+  padding: var(--space-8);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.feature-card:hover {
+  border-color: var(--color-black);
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+.feature-number {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-gray-200);
+  margin-bottom: var(--space-4);
+  font-family: var(--font-family-mono);
+}
+
+.feature-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-black);
+  margin-bottom: var(--space-4);
+}
+
+.feature-description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ============================================
+   STATS SECTION
+   ============================================ */
+
+.stats-section {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: var(--space-16) var(--space-6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-12);
+  flex-wrap: wrap;
+}
+
+.stat-item {
   text-align: center;
 }
 
-.feature h3 {
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
+.stat-value {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-black);
+  margin-bottom: var(--space-2);
+  letter-spacing: -0.02em;
 }
 
-.feature p {
-  color: #666;
-  line-height: 1.6;
+.stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: var(--font-weight-medium);
+}
+
+.stat-divider {
+  width: 2px;
+  height: 60px;
+  background-color: var(--color-gray-700);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .hero {
+    padding: var(--space-16) var(--space-6);
+  }
+
+  .hero-title {
+    font-size: var(--font-size-4xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-lg);
+  }
+
+  .features-section {
+    padding: var(--space-16) var(--space-6);
+  }
+
+  .stats-section {
+    padding: var(--space-12) var(--space-6);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-12) var(--space-4);
+  }
+
+  .hero-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-8);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .features-section {
+    padding: var(--space-12) var(--space-4);
+  }
+
+  .section-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .features-grid {
+    gap: var(--space-6);
+  }
+
+  .feature-card {
+    padding: var(--space-6);
+  }
+
+  .stats-section {
+    gap: var(--space-8);
+    padding: var(--space-10) var(--space-4);
+  }
+
+  .stat-divider {
+    display: none;
+  }
+
+  .stat-value {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: var(--space-10) var(--space-3);
+  }
+
+  .hero-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .features-section {
+    padding: var(--space-10) var(--space-3);
+  }
+
+  .section-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .feature-number {
+    font-size: var(--font-size-2xl);
+  }
+
+  .feature-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .stats-section {
+    flex-direction: column;
+    gap: var(--space-6);
+  }
 }
 </style>
