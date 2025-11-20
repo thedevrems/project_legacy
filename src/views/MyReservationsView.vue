@@ -1,60 +1,89 @@
 <template>
-  <div class="my-reservations">
-    <h1>My Reservations</h1>
-
-    <div v-if="bookingsStore.loading" class="loading">Loading your reservations...</div>
-
-    <div v-else-if="bookingsStore.reservations.length === 0" class="empty-state">
-      <p>You don't have any reservations yet.</p>
-      <router-link to="/services" class="btn btn-primary">Browse Services</router-link>
-    </div>
-
-    <div v-else class="reservations-list">
-      <div
-        v-for="reservation in bookingsStore.reservations"
-        :key="reservation.id"
-        class="reservation-card"
-      >
-        <div class="reservation-header">
-          <h3>{{ reservation.serviceName }}</h3>
-          <span
-            :class="['status-badge', isFuture(reservation.slotDatetime) ? 'upcoming' : 'past']"
-          >
-            {{ isFuture(reservation.slotDatetime) ? 'Upcoming' : 'Past' }}
-          </span>
-        </div>
-
-        <p v-if="reservation.serviceDescription" class="description">
-          {{ reservation.serviceDescription }}
-        </p>
-
-        <div class="reservation-details">
-          <div class="detail-item">
-            <strong>Date & Time:</strong>
-            {{ formatDateTime(reservation.slotDatetime) }}
-          </div>
-          <div v-if="reservation.serviceDuration" class="detail-item">
-            <strong>Duration:</strong>
-            {{ reservation.serviceDuration }} minutes
-          </div>
-          <div class="detail-item">
-            <strong>Booked on:</strong>
-            {{ formatDateTime(reservation.createdAt) }}
-          </div>
-        </div>
-
-        <button
-          v-if="isFuture(reservation.slotDatetime)"
-          class="btn btn-danger"
-          :disabled="cancellingId === reservation.id"
-          @click="handleCancelReservation(reservation.id)"
-        >
-          {{ cancellingId === reservation.id ? 'Cancelling...' : 'Cancel Reservation' }}
-        </button>
+  <div class="my-reservations-page">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Mes Réservations</h1>
+        <div class="title-underline"></div>
       </div>
-    </div>
 
-    <div v-if="message" :class="['message', messageType]">{{ message }}</div>
+      <div v-if="bookingsStore.loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Chargement de vos réservations...</p>
+      </div>
+
+      <div v-else-if="bookingsStore.reservations.length === 0" class="empty-state">
+        <div class="empty-icon">📋</div>
+        <h2 class="empty-title">Aucune réservation</h2>
+        <p class="empty-text">Vous n'avez pas encore effectué de réservation.</p>
+        <router-link to="/services" class="btn btn-primary btn-lg">
+          Parcourir les services
+        </router-link>
+      </div>
+
+      <div v-else class="reservations-list">
+        <div
+          v-for="reservation in bookingsStore.reservations"
+          :key="reservation.id"
+          class="reservation-card"
+        >
+          <div class="card-header">
+            <div class="header-content">
+              <h3 class="service-name">{{ reservation.serviceName }}</h3>
+              <span
+                :class="['status-badge', isFuture(reservation.slotDatetime) ? 'upcoming' : 'past']"
+              >
+                {{ isFuture(reservation.slotDatetime) ? 'À venir' : 'Passée' }}
+              </span>
+            </div>
+            <p v-if="reservation.serviceDescription" class="service-description">
+              {{ reservation.serviceDescription }}
+            </p>
+          </div>
+
+          <div class="card-body">
+            <div class="detail-row">
+              <div class="detail-icon">📅</div>
+              <div class="detail-content">
+                <span class="detail-label">Date et heure</span>
+                <span class="detail-value">{{ formatDateTime(reservation.slotDatetime) }}</span>
+              </div>
+            </div>
+
+            <div v-if="reservation.serviceDuration" class="detail-row">
+              <div class="detail-icon">⏱</div>
+              <div class="detail-content">
+                <span class="detail-label">Durée</span>
+                <span class="detail-value">{{ reservation.serviceDuration }} minutes</span>
+              </div>
+            </div>
+
+            <div class="detail-row">
+              <div class="detail-icon">🎫</div>
+              <div class="detail-content">
+                <span class="detail-label">Réservé le</span>
+                <span class="detail-value">{{ formatDateTime(reservation.createdAt) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="isFuture(reservation.slotDatetime)" class="card-footer">
+            <button
+              class="btn btn-danger btn-block"
+              :disabled="cancellingId === reservation.id"
+              @click="handleCancelReservation(reservation.id)"
+            >
+              {{ cancellingId === reservation.id ? 'Annulation...' : 'Annuler la réservation' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <transition name="fade">
+        <div v-if="message" :class="['message-toast', messageType + '-message']">
+          {{ message }}
+        </div>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -77,10 +106,10 @@ function isFuture(datetime: string): boolean {
 
 function formatDateTime(datetime: string): string {
   const date = new Date(datetime)
-  return date.toLocaleString('en-US', {
-    weekday: 'short',
+  return date.toLocaleString('fr-FR', {
+    weekday: 'long',
     year: 'numeric',
-    month: 'short',
+    month: 'long',
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
@@ -88,7 +117,7 @@ function formatDateTime(datetime: string): string {
 }
 
 function handleCancelReservation(reservationId: string) {
-  if (!confirm('Are you sure you want to cancel this reservation?')) {
+  if (!confirm('Êtes-vous sûr de vouloir annuler cette réservation ?')) {
     return
   }
 
@@ -98,10 +127,10 @@ function handleCancelReservation(reservationId: string) {
   const result = bookingsStore.cancelReservation(reservationId)
 
   if (result.success) {
-    message.value = 'Reservation cancelled successfully'
+    message.value = 'Réservation annulée avec succès'
     messageType.value = 'success'
   } else {
-    message.value = result.error || 'Failed to cancel reservation'
+    message.value = result.error || "Échec de l'annulation"
     messageType.value = 'error'
   }
 
@@ -115,113 +144,309 @@ function handleCancelReservation(reservationId: string) {
 </script>
 
 <style scoped>
-.my-reservations {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+.my-reservations-page {
+  min-height: calc(100vh - 200px);
+  padding: var(--space-10) 0;
 }
 
-h1 {
+/* ============================================
+   PAGE HEADER
+   ============================================ */
+
+.page-header {
   text-align: center;
-  color: #2c3e50;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-12);
 }
 
-.loading,
+.page-title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-black);
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+}
+
+.title-underline {
+  width: 80px;
+  height: 4px;
+  background-color: var(--color-black);
+  margin: 0 auto;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+
+.loading-state {
+  text-align: center;
+  padding: var(--space-20) var(--space-6);
+  color: var(--color-text-secondary);
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--color-gray-200);
+  border-top-color: var(--color-black);
+  border-radius: 50%;
+  margin: 0 auto var(--space-4);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+
 .empty-state {
   text-align: center;
-  padding: 3rem;
-  color: #666;
+  padding: var(--space-20) var(--space-6);
 }
 
-.empty-state .btn {
-  margin-top: 1rem;
+.empty-icon {
+  font-size: var(--font-size-5xl);
+  margin-bottom: var(--space-4);
+  opacity: 0.5;
 }
+
+.empty-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-black);
+  margin-bottom: var(--space-3);
+}
+
+.empty-text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================
+   RESERVATIONS LIST
+   ============================================ */
 
 .reservations-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-6);
 }
 
 .reservation-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--transition-base);
 }
 
-.reservation-header {
+.reservation-card:hover {
+  border-color: var(--color-black);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ============================================
+   CARD SECTIONS
+   ============================================ */
+
+.card-header {
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
-.reservation-header h3 {
-  color: #2c3e50;
+.service-name {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-black);
   margin: 0;
+  line-height: var(--line-height-tight);
+  flex: 1;
 }
 
 .status-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 .status-badge.upcoming {
-  background: #d4edda;
-  color: #155724;
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 .status-badge.past {
-  background: #e2e3e5;
-  color: #6c757d;
+  background-color: var(--color-gray-200);
+  color: var(--color-gray-600);
 }
 
-.description {
-  color: #666;
-  margin-bottom: 1rem;
-  line-height: 1.6;
+.service-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin: 0;
 }
 
-.reservation-details {
-  background: #f8f9fa;
-  padding: 1rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+.card-body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
 }
 
-.detail-item {
-  margin-bottom: 0.5rem;
-  color: #2c3e50;
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
 }
 
-.detail-item:last-child {
-  margin-bottom: 0;
+.detail-icon {
+  font-size: var(--font-size-xl);
+  flex-shrink: 0;
+  opacity: 0.8;
 }
 
-.detail-item strong {
-  color: #000;
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
 }
 
-.message {
-  margin-top: 2rem;
-  padding: 1rem;
-  border-radius: 4px;
+.detail-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-value {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-black);
+  text-transform: capitalize;
+}
+
+.card-footer {
+  padding: var(--space-6);
+  background-color: var(--color-gray-100);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ============================================
+   MESSAGE TOAST
+   ============================================ */
+
+.message-toast {
+  position: fixed;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  box-shadow: var(--shadow-2xl);
+  z-index: var(--z-tooltip);
+  max-width: 90%;
   text-align: center;
 }
 
-.message.success {
-  background: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+/* Transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: all var(--transition-base);
 }
 
-.message.error {
-  background: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(-50%) translateY(20px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-20px);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .my-reservations-page {
+    padding: var(--space-8) 0;
+  }
+
+  .page-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .page-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .reservations-list {
+    gap: var(--space-4);
+  }
+
+  .card-header,
+  .card-body,
+  .card-footer {
+    padding: var(--space-5);
+  }
+
+  .service-name {
+    font-size: var(--font-size-xl);
+  }
+
+  .message-toast {
+    bottom: var(--space-6);
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .my-reservations-page {
+    padding: var(--space-6) 0;
+  }
+
+  .page-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .status-badge {
+    align-self: flex-start;
+  }
+
+  .card-header,
+  .card-body,
+  .card-footer {
+    padding: var(--space-4);
+  }
 }
 </style>
